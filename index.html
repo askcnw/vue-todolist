@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TODO LIST</title>
+		<link rel="stylesheet" href="./main.css" />
+	</head>
+	<body>
+		<div id="app">
+			<h1 class="title__heading">TODO LIST</h1>
+			<div class="filter">
+				<p class="filter__heading">絞り込み</p>
+				<label v-for="label in options" class="filter__label"> <input type="radio" v-model="current" v-bind:value="label.value" />{{ label.label }} </label>
+				<p class="filter__num">({{ todos.length }}件中{{ computedTodos.length }}件表示)</p>
+			</div>
+			<table class="todoTable">
+				<thead class="todoTable__head">
+					<tr>
+						<th>ID</th>
+						<th>コメント</th>
+						<th>状態</th>
+						<th>-</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="item in computedTodos" :key="item.id" :class="{ todoTable__list__finish : item.state }">
+						<th>{{ item.id }}</th>
+						<td>{{ item.comment }}</td>
+						<td>
+							<div @click="doChangeState(item)" class="button__state">{{ labels[item.state] }}</div>
+						</td>
+						<td>
+							<div @click="doRemove(item)" class="button__delete">削除</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="addTodo">
+				<h2 class="addTodo__heading">新しい作業の追加</h2>
+				<p class="addTodo__text">コメント</p>
+				<input type="text" ref="comment" />
+				<div @click="doAdd" class="button__add">追加</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>
